@@ -17,6 +17,7 @@ import { Route as PostIdRouteImport } from './routes/$postId'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile'
+import { Route as ApiDashboardRouteImport } from './routes/api/dashboard'
 import { Route as AccountPasswordRouteImport } from './routes/account/password'
 import { Route as AuthLoginRouteImport } from './routes/_auth.login'
 
@@ -59,6 +60,11 @@ const DashboardProfileRoute = DashboardProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => DashboardRoute,
 } as any)
+const ApiDashboardRoute = ApiDashboardRouteImport.update({
+  id: '/api/dashboard',
+  path: '/api/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountPasswordRoute = AccountPasswordRouteImport.update({
   id: '/account/password',
   path: '/account/password',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/account/password': typeof AccountPasswordRoute
+  '/api/dashboard': typeof ApiDashboardRoute
   '/dashboard/profile': typeof DashboardProfileRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/login': typeof AuthLoginRoute
   '/account/password': typeof AccountPasswordRoute
+  '/api/dashboard': typeof ApiDashboardRoute
   '/dashboard/profile': typeof DashboardProfileRoute
   '/dashboard': typeof DashboardIndexRoute
 }
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/account/password': typeof AccountPasswordRoute
+  '/api/dashboard': typeof ApiDashboardRoute
   '/dashboard/profile': typeof DashboardProfileRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/account/password'
+    | '/api/dashboard'
     | '/dashboard/profile'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/account/password'
+    | '/api/dashboard'
     | '/dashboard/profile'
     | '/dashboard'
   id:
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/_auth/login'
     | '/account/password'
+    | '/api/dashboard'
     | '/dashboard/profile'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
@@ -148,6 +160,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   AccountPasswordRoute: typeof AccountPasswordRoute
+  ApiDashboardRoute: typeof ApiDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardProfileRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/api/dashboard': {
+      id: '/api/dashboard'
+      path: '/api/dashboard'
+      fullPath: '/api/dashboard'
+      preLoaderRoute: typeof ApiDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/account/password': {
       id: '/account/password'
       path: '/account/password'
@@ -257,6 +277,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
   AccountPasswordRoute: AccountPasswordRoute,
+  ApiDashboardRoute: ApiDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

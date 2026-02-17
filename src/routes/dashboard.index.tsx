@@ -5,5 +5,5 @@ export const Route = createFileRoute('/dashboard/')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/dashboard/ default child route"!</div>
+  return <div className='flex justify-center items-center mt-5'>Hello "/dashboard/ default child route"!</div>
 }
