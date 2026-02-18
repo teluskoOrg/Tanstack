@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PostsRouteImport } from './routes/posts'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -21,6 +22,11 @@ import { Route as ApiDashboardRouteImport } from './routes/api/dashboard'
 import { Route as AccountPasswordRouteImport } from './routes/account/password'
 import { Route as AuthLoginRouteImport } from './routes/_auth.login'
 
+const PostsRoute = PostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/posts': typeof PostsRoute
   '/login': typeof AuthLoginRoute
   '/account/password': typeof AccountPasswordRoute
   '/api/dashboard': typeof ApiDashboardRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/$postId': typeof PostIdRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/posts': typeof PostsRoute
   '/login': typeof AuthLoginRoute
   '/account/password': typeof AccountPasswordRoute
   '/api/dashboard': typeof ApiDashboardRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/posts': typeof PostsRoute
   '/_auth/login': typeof AuthLoginRoute
   '/account/password': typeof AccountPasswordRoute
   '/api/dashboard': typeof ApiDashboardRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/dashboard'
+    | '/posts'
     | '/login'
     | '/account/password'
     | '/api/dashboard'
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/$postId'
     | '/about'
     | '/contact'
+    | '/posts'
     | '/login'
     | '/account/password'
     | '/api/dashboard'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/dashboard'
+    | '/posts'
     | '/_auth/login'
     | '/account/password'
     | '/api/dashboard'
@@ -159,12 +171,20 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  PostsRoute: typeof PostsRoute
   AccountPasswordRoute: typeof AccountPasswordRoute
   ApiDashboardRoute: typeof ApiDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -276,6 +296,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  PostsRoute: PostsRoute,
   AccountPasswordRoute: AccountPasswordRoute,
   ApiDashboardRoute: ApiDashboardRoute,
 }
